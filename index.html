@@ -51,25 +51,31 @@
         </div>
         <br />
         <button id="clickbind" type="button" class="btn btn-info">PDF</button>
-        <button id="clickbind" type="button" class="btn btn-info">Submit</button>
+        <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
     </div>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script> -->
     <script>
+        // RegExp's used throughout this website
         const setLine = new RegExp('^(\\d+)\\s*x\\s*(\\d+)\\s*@\\s*(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d|\\d\\d|\\d)\\s+(.*)$');
         const noRepLine = new RegExp('^(\\d+)\\s*@\\s*(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d|\\d\\d|\\d)\\s+(.*)$');
         const roundLine = new RegExp('(\\d+)\\s*x\\s*{$');
         const setDes = new RegExp('//\\s*(.*)');
         const endRoundLine = new RegExp('^}$');
+        const restLine = new RegExp('^(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d)\\s*(.*)$')
         const time0 = new RegExp('^(\\d\\d):(\\d\\d)$');
         const time1 = new RegExp('^(\\d):(\\d\\d)$');
         const time2 = new RegExp('^:(\\d\\d)$');
         const time3 = new RegExp('^(\\d\\d)$');
         const time4 = new RegExp('^(\\d)$');
-        let globalInfo;
 
-        function timeToString(data) {
+        // global variable that holds the specific object
+        let globalInfo;
+        let globalColor = 0;
+
+        // helper functions
+        const timeToString = (data) => {
             let hours = Math.floor(data / 3600);
             data -= hours * 3600;
             let minutes = Math.floor(data / 60);
@@ -78,7 +84,7 @@
             return hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
         }
 
-        function timeToInt(data) {
+        const timeToInt = (data) => {
             if (time0.test(data)) {
                 let array = time0.exec(data);
                 return parseInt(array[1], 10) * 60 + parseInt(array[2], 10);
@@ -106,8 +112,8 @@
 
         function getInfo(data) {
             info = {
-                "date": document.getElementById('date').value,
-                "group": document.getElementById('group').value,
+                "date": document.getElementById('date').value.replace("/", "-"),
+                "group": document.getElementById('group').value.replace(" ", "-"),
                 "title": document.getElementById('title').value,
                 "yards": 0,
                 "time": 0,
@@ -153,41 +159,60 @@
                 } else if (roundLine.test(line)) {
                     let array = roundLine.exec(line);
                     currentRounds = parseInt(array[1], 10);
+                } else if (restLine.test(line)) {
+                    let array = restLine.exec(line);
+                    let rep = 1;
+                    let dis = 0;
+                    let int = array[1];
+                    let des = array[2];
+                    info.time += currentRounds * timeToInt(int);
+                    let currentLine = {
+                        "rep": rep,
+                        "dis": dis,
+                        "int": int,
+                        "des": des
+                    };
+                    currentSet.lines.push(currentLine);
                 } else if (setDes.test(line)) {
                     let array = setDes.exec(line);
                     currentSet.des = array[1];
                 } else if (line === "") {
-                    currentSet.rounds = currentRounds;
-                    info.sets.push(currentSet);
-                    currentRounds = 1;
-                    currentSet = {
-                        des: "",
-                        lines: [],
-                        rounds: 1
-                    };
+                    if (currentSet.lines.length != 0) {
+                        currentSet.rounds = currentRounds;
+                        info.sets.push(currentSet);
+                        currentRounds = 1;
+                        currentSet = {
+                            des: "",
+                            lines: [],
+                            rounds: 1
+                        };
+                    }
                 }
             });
+            if (currentSet.lines.length != 0) {
+                currentSet.rounds = currentRounds;
+                info.sets.push(currentSet);
+            }
             globalInfo = info;
             return info;
         }
 
-        function process(e) {
-            var textArea = document.getElementById('workout').value;
-            var array = textArea.split('\n');
-            document.getElementById('output').innerHTML = "<p>Time: " + timeToString(getInfo(array).time) + "</p><p>Yards: " + getInfo(array).yards + "</p>";
+        const process = (e) => {
+            let textArea = document.getElementById('workout').value;
+            let array = textArea.split('\n');
+            let info = getInfo(array);
+            document.getElementById('output').innerHTML = "<p>Time: " + timeToString(info.time) + "</p><p>Yards: " + info.yards + "</p>";
         }
 
-        function onClick() {
+        const makePdf = () => {
             const {
                 jsPDF
             } = window.jspdf;
-            let workout = globalInfo;
-            console.log(workout);
             const newLineDist = 17;
             const tab = 15;
             const margin = 20;
 
-            var pdf = new jsPDF({
+            let pdf = new jsPDF({
                 unit: 'px'
             });
             pdf.addImage("data:image/jpeg;base64,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\
@@ -196,17 +221,17 @@
             pdf.setFontSize(32);
             pdf.text("Chinook Aquatic Club", margin, 36);
             pdf.setFontSize(20);
-            pdf.text(workout.date + " - " + workout.group, margin, 56);
+            pdf.text(globalInfo.date + " - " + globalInfo.group, margin, 56);
             pdf.setFontSize(18);
             pdf.setFont("Courier", "italic");
-            pdf.text(workout.title, margin, 100);
+            pdf.text(globalInfo.title, margin, 100);
 
             pdf.setFontSize(16);
             pdf.setFont("Courier", "normal");
 
             let left = margin;
             let top = 144;
-            workout.sets.forEach(set => {
+            globalInfo.sets.forEach(set => {
                 pdf.setFont("Courier", "bold");
                 pdf.text(set.des, left, top);
                 pdf.setFont("Courier", "normal");
@@ -217,7 +242,7 @@
                     top += newLineDist;
                 }
                 set.lines.forEach(line => {
-                    pdf.text((line.rep > 1 ? line.rep + " x " : "") + line.dis + " @ " + line.int + " " + line.des, left, top);
+                    pdf.text((line.rep > 1 ? line.rep + " x " : "") + (line.dis > 0 ? line.dis + " @ " : "") + line.int + " " + line.des, left, top);
                     top += newLineDist;
                 });
                 if (left === margin + tab) {
@@ -227,11 +252,75 @@
                 }
                 top += newLineDist * 1.5;
             });
-            pdf.save('Workout.pdf');
+            pdf.save(globalInfo.date + "_" + globalInfo.group + ".pdf");
         };
 
-        var element = document.getElementById("clickbind");
-        element.addEventListener("click", onClick);
+        const makeSeconds = () => {
+            let seconds = {};
+            seconds._type = "pack";
+            seconds.name = "Shared Timers";
+            seconds.items = [];
+            let folder = {};
+            folder._type = "pack";
+            folder.name = globalInfo.group + " " + globalInfo.date;
+            folder.color = globalInfo.group.indexOf("Blue") > -1 ? "6" : "1";
+            folder.items = [];
+            globalInfo.sets.forEach(setItem => {
+                let set = {};
+                set.overrun = false;
+                set._type = "cust";
+                set.type = 0;
+                set.name = setItem.des;
+                set.soundScheme = 1;
+                set.activity = 46;
+                set.intervals = [];
+                for (let i = 0; i < setItem.rounds; i++) {
+                    setItem.lines.forEach(line => {
+                        for (let j = 0; j < line.rep; j++) {
+                            let secondsLine = {};
+                            secondsLine.splitRest = 0;
+                            secondsLine.ducked = false;
+                            secondsLine.rest = false;
+                            secondsLine.color = (globalColor % 9) + 1;
+                            secondsLine.indefinite = false;
+                            secondsLine.split = false;
+                            secondsLine.vibration = false;
+                            secondsLine.halfwayAlert = false;
+                            secondsLine.duration = timeToInt(line.int);
+                            secondsLine._type = "int";
+                            secondsLine.name = (line.dis > 0 ? line.dis + " " : "") + line.des;
+
+                            set.intervals.push(secondsLine);
+                        }
+                        globalColor++;
+                    });
+                }
+                folder.items.push(set);
+            });
+
+            seconds.items.push(folder);
+
+            download(globalInfo.date + "_" + globalInfo.group + ".seconds3", JSON.stringify(seconds));
+        }
+
+        const download = (filename, text) => {
+            let element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+        let pdfButton = document.getElementById("clickbind");
+        pdfButton.addEventListener("click", makePdf);
+
+        let secondsButton = document.getElementById("clickbind2");
+        secondsButton.addEventListener("click", makeSeconds);
     </script>
 </body>
 
