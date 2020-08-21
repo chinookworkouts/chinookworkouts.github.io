@@ -52,8 +52,6 @@
         </div>
     </div>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script> -->
     <script>
         // RegExp's used throughout this website
         const setLine = new RegExp('^(\\d+)\\s*x\\s*(\\d+)\\s*@\\s*(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d|\\d\\d|\\d)\\s+(.*)$');
@@ -108,6 +106,7 @@
 
         }
 
+        // parse string into our custom object
         function getInfo(data) {
             info = {
                 "date": document.getElementById('date').value.replace("/", "-"),
@@ -195,15 +194,16 @@
             return info;
         }
 
+        // call this function to update our array every time a button is pressed in the textarea
         const process = (e) => {
             let textArea = document.getElementById('workout').value;
             let array = textArea.split('\n');
             let info = getInfo(array);
             document.getElementById('totalYards').innerHTML = info.yards;
             document.getElementById('totalTime').innerHTML = timeToString(info.time);
-            // document.getElementById('output').innerHTML = "<p>Time: " + timeToString(info.time) + "</p><p>Yards: " + info.yards + "</p>";
         }
 
+        // use our custom object to create a pdf file and download it
         const makePdf = () => {
             const {
                 jsPDF
@@ -255,6 +255,7 @@
             pdf.save(globalInfo.date + "_" + globalInfo.group + ".pdf");
         };
 
+        // use our custom object to create a seconds file to use in the app
         const makeSeconds = () => {
             let seconds = {};
             seconds._type = "pack";
@@ -300,13 +301,9 @@
 
             seconds.items.push(folder);
 
-            download(globalInfo.date + "_" + globalInfo.group + ".seconds3", JSON.stringify(seconds));
-        }
-
-        const download = (filename, text) => {
             let element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-            element.setAttribute('download', filename);
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(seconds)));
+            element.setAttribute('download', globalInfo.date + "_" + globalInfo.group + ".seconds3");
 
             element.style.display = 'none';
             document.body.appendChild(element);
@@ -323,6 +320,5 @@
         secondsButton.addEventListener("click", makeSeconds);
     </script>
 </body>
-
 
 </html>
