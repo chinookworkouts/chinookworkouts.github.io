@@ -12,46 +12,44 @@
     <title>Practice Writer</title>
 </head>
 
-<body onload="document.getElementById('workout').value=''">
+<body>
     <div class="container">
         <h1>Workout Writer</h1>
         <div class="row">
-            <div class="col-8">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="date">Date:</label>
-                            <input type="date" class="form-control" id="date" name="date">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="group">Group</label>
-                            <select class="form-control" id="group">
-                                <option>Renton Sectional</option>
-                                <option>Renton Blue</option>
-                                <option>Renton White</option>
-                                <option>Renton Red</option>
-                                <option>Bellevue Sectional</option>
-                                <option>Bellevue Blue</option>
-                                <option>Bellevue White</option>
-                                <option>Bellevue Red</option>
-                              </select>
-                        </div>
-                    </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" class="form-control" id="date" name="date">
                 </div>
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" maxlength="40">
-                <label for="workout">Workout:</label>
-                <textarea class="form-control" rows="20" id="workout" onkeyup="process(event, this)"></textarea>
+                <div class="form-group">
+                    <label for="group">Group</label>
+                    <select class="form-control" id="group">
+                        <option>Renton Sectional</option>
+                        <option>Renton Blue</option>
+                        <option>Renton White</option>
+                        <option>Renton Red</option>
+                        <option>Bellevue Sectional</option>
+                        <option>Bellevue Blue</option>
+                        <option>Bellevue White</option>
+                        <option>Bellevue Red</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" maxlength="40">
+                </div>
+                <div>
+                    <p>Total Time: <span id="totalTime"></span></p>
+                    <p>Total Yards: <span id="totalYards"></span></p>
+                </div>
+                <button id="clickbind" type="button" class="btn btn-info">PDF</button>
+                <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
             </div>
-            <div class="col">
-                <p id="output"></p>
+            <div class="col-9">
+                <label for="workout">Workout:</label>
+                <textarea class="form-control" rows="24" id="workout" onkeyup="process(event, this)"></textarea>
             </div>
         </div>
-        <br />
-        <button id="clickbind" type="button" class="btn btn-info">PDF</button>
-        <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
     </div>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script> -->
@@ -201,7 +199,9 @@
             let textArea = document.getElementById('workout').value;
             let array = textArea.split('\n');
             let info = getInfo(array);
-            document.getElementById('output').innerHTML = "<p>Time: " + timeToString(info.time) + "</p><p>Yards: " + info.yards + "</p>";
+            document.getElementById('totalYards').innerHTML = info.yards;
+            document.getElementById('totalTime').innerHTML = timeToString(info.time);
+            // document.getElementById('output').innerHTML = "<p>Time: " + timeToString(info.time) + "</p><p>Yards: " + info.yards + "</p>";
         }
 
         const makePdf = () => {
