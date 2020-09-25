@@ -212,6 +212,7 @@
                 lines: [],
                 rounds: 1
             };
+            let tooLong = false;
             data.forEach(line => {
                 if (setLine.test(line)) {
                     let array = setLine.exec(line);
@@ -275,12 +276,20 @@
                         };
                     }
                 }
+                if (line.length > 55) {
+                    tooLong = true;
+                }
             });
             if (currentSet.lines.length != 0) {
                 currentSet.rounds = currentRounds;
                 info.sets.push(currentSet);
             }
             globalInfo = info;
+            if (tooLong) {
+                document.getElementById("workout").style.color = "red";
+            } else {
+                document.getElementById("workout").style.color = "black";
+            }
             return info;
         }
 
@@ -314,13 +323,13 @@
             pdf.text(globalInfo.date + " - " + globalInfo.group, margin, 56);
             pdf.setFontSize(18);
             pdf.setFont("Courier", "italic");
-            pdf.text(globalInfo.title, margin, 100);
+            pdf.text(globalInfo.title, margin, 90);
 
             pdf.setFontSize(16);
             pdf.setFont("Courier", "normal");
 
             let left = margin;
-            let top = 144;
+            let top = 124;
             globalInfo.sets.forEach(set => {
                 pdf.setFont("Courier", "bold");
                 pdf.text(set.des, left, top);
@@ -340,7 +349,7 @@
                     pdf.text("}", left, top);
                     top += newLineDist;
                 }
-                top += newLineDist * 1.5;
+                top += newLineDist;
             });
             pdf.save(globalInfo.date + "_" + globalInfo.group + ".pdf");
         };
