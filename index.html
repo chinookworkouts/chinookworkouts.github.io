@@ -42,6 +42,10 @@
             border-top: none;
         }
     </style>
+    <script>
+        const bleep = new Audio();
+        bleep.src = "bleep.wav";
+    </script>
 </head>
 
 <body style="font-family:'Courier New', Courier, monospace">
@@ -70,7 +74,7 @@
                         <p>Total Time: <span id="totalTime"></span></p>
                         <p>Total Yards: <span id="totalYards"></span></p>
                     </div>
-                    <button id="clickbind" type="button" class="btn btn-info">PDF</button>
+                    <button id="clickbind" type="button" class="btn btn-info" onmousedown="bleep.play()">PDF</button>
                     <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
                 </div>
                 <div class="col-9">
