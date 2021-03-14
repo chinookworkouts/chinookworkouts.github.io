@@ -16,27 +16,27 @@
 
 <body style="font-family:'Courier New', Courier, monospace; padding: 0; margin: 0;">
     <div id="Timer" style="font-weight: bold;">
-        <div id="topClock" style="position: absolute; user-select: none; -moz-user-select: none; width: 2160px; height: 810px;background-color: yellow;color: black;">
-            <div id="clock1" style="position: absolute; left: 200px; top: 100px; font-size: 600px;" onclick="startOne()">00:00</div>
-            <div id="repLeft1" style="position: absolute; left: 1540px; top: 0px; font-size: 200px;">00:00</div>
-            <div id="setLeft1" style="position: absolute; left: 1540px; top: 600px; font-size: 200px;">00:00</div>
-            <div id="repDone1" style="position: absolute; left: 0px; top: 0px; font-size: 200px;">&nbsp;&nbsp;/</div>
-            <div id="setDone1" style="position: absolute; left: 0px; top: 600px; font-size: 200px;">&nbsp;&nbsp;/</div>
-            <input type="file" id="workoutUpload1" style="position: absolute; left: 200px; display: none;">
-            <button style="position: absolute; left: 850px; padding: 0 45px; color: black; background-color: yellow; border-radius: 20px; font-size: 100px; font-family: 'Courier New', Courier, monospace; font-weight: bold; top: 45px;" onclick="document.getElementById('workoutUpload1').click()">Upload</button>
-            <select id="setSelect1" style="position: absolute; font-size: 100px; color: black; background-color: yellow; font-family: 'Courier New', Courier, monospace; font-weight: bold; left: 680px; top: 660px; width: 800px;">
+        <div id="topClock" style="position: absolute; user-select: none; -moz-user-select: none; width: 100vw; height: 50vh;background-color: yellow;color: black;">
+            <div id="clock1" style="position: absolute; top: 10vh; left: 25vw; width: 50vw; text-align: center; font-size: 25vh;" onclick="startOne()">00:00</div>
+            <div id="repLeft1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 70vw; top: 30vh;">00:00</div>
+            <div id="setLeft1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 70vw;">00:00</div>
+            <div id="repDone1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; top: 30vh;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
+            <div id="setDone1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
+            <input type="file" id="workoutUpload1" style="position: absolute; display: none;">
+            <button style="position: absolute; left: 50%; padding: 0 45px; color: black; background-color: yellow; border-radius: 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold;" onclick="document.getElementById('workoutUpload1').click()">Upload</button>
+            <select id="setSelect1" style="position: absolute; left: 40vw; width: 20vw; top: 45vh; color: black; background-color: yellow; font-family: 'Courier New', Courier, monospace; font-weight: bold;">
             </select>
         </div>
-        <hr style="position: absolute; width: 2160px; top: 805px; background-color: black; z-index: 1; height: 10px;" />
-        <div id="bottomClock" style="position: absolute; top: 810px; user-select: none; -moz-user-select: none; width: 2160px; height: 810px;background-color: yellow;color: black;">
-            <div id="clock2" style="position: absolute; left: 200px; top: 100px; font-size: 600px;" onclick="startTwo()">00:00</div>
-            <div id="repLeft2" style="position: absolute; left: 1540px; top: 0px; font-size: 200px;">00:00</div>
-            <div id="setLeft2" style="position: absolute; left: 1540px; top: 600px; font-size: 200px;">00:00</div>
-            <div id="repDone2" style="position: absolute; left: 0px; top: 0px; font-size: 200px;">&nbsp;&nbsp;/</div>
-            <div id="setDone2" style="position: absolute; left: 0px; top: 600px; font-size: 200px;">&nbsp;&nbsp;/</div>
-            <input type="file" id="workoutUpload2" style="position: absolute; left: 200px; display: none;">
-            <button style="position: absolute; left: 850px; color: black; padding: 0 45px; background-color: yellow; border-radius: 20px; font-size: 100px; font-family: 'Courier New', Courier, monospace; font-weight: bold; top: 45px;" onclick="document.getElementById('workoutUpload2').click()">Upload</button>
-            <select id="setSelect2" style="position: absolute; font-size: 100px; color: black; background-color: yellow; font-family: 'Courier New', Courier, monospace; font-weight: bold; left: 680px; top: 660px; width: 800px;"></select>
+        <div id="bottomClock" style="position: absolute; user-select: none; -moz-user-select: none; width: 100vw; height: 50vh;background-color: yellow;color: black; top: 50vh">
+            <div id="clock2" style="position: absolute; top: 10vh; left: 25vw; width: 50vw; text-align: center; font-size: 25vh;" onclick="startOne()">00:00</div>
+            <div id="repLeft2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 70vw; top: 30vh;">00:00</div>
+            <div id="setLeft2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 70vw;">00:00</div>
+            <div id="repDone2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; top: 30vh;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
+            <div id="setDone2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
+            <input type="file" id="workoutUpload2" style="position: absolute; display: none;">
+            <button style="position: absolute; left: 50%; padding: 0 45px; color: black; background-color: yellow; border-radius: 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold;" onclick="document.getElementById('workoutUpload1').click()">Upload</button>
+            <select id="setSelect2" style="position: absolute; left: 40vw; width: 20vw; top: 45vh; color: black; background-color: yellow; font-family: 'Courier New', Courier, monospace; font-weight: bold;">
+            </select>
         </div>
     </div>
     <script>
