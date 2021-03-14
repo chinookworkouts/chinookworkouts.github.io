@@ -8,6 +8,47 @@
     <meta name=”apple-mobile-web-app-capable” content=”yes”>
 
     <title>Practice Writer</title>
+    <style>
+        .keep-track {
+            font-size: 10vh;
+        }
+        .main-clock {
+            font-size: 35vh;
+        }
+        .left-side {
+            float:left;
+        }
+        .right-side {
+            float:right;
+            text-align: right;
+        }
+        .split-screen {
+            height: 50vh;
+            width: 100vw;
+            user-select: none;
+            -moz-user-select: none;
+            position: absolute;
+        }
+        .upload-button {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: palegoldenrod;
+            margin: 0 40px;
+            top: 0;
+            left: 0;
+            position: relative;
+            display: inline-block;
+            padding: 15px 25px;
+            font-weight: bold;
+
+            color: brown;
+            letter-spacing: 1px;
+            box-shadow: -6px 6px 0 brown;
+            text-decoration: none;
+        }
+        .set-description {
+            font-size: 6vh;
+        }
+    </style>
     <script>
         const bleep = new Audio();
         bleep.src = "bleep.wav";
@@ -16,27 +57,35 @@
 
 <body style="font-family:'Courier New', Courier, monospace; padding: 0; margin: 0;">
     <div id="Timer" style="font-weight: bold;">
-        <div id="topClock" style="position: absolute; user-select: none; -moz-user-select: none; width: 100vw; height: 50vh;background-color: yellow;color: black;">
-            <div id="clock1" style="position: absolute; top: 10vh; left: 25vw; width: 50vw; text-align: center; font-size: 25vh;" onclick="startOne()">00:00</div>
-            <div id="repLeft1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 69vw; top: 30vh;">00:00</div>
-            <div id="setLeft1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 69vw;">00:00</div>
-            <div id="repDone1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; top: 30vh;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-            <div id="setDone1" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-            <input type="file" id="workoutUpload1" style="position: absolute; display: none;">
-            <button style="position: absolute; left: 50%; padding: 0 45px; color: black; background-color: yellow; border-radius: 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold;" onclick="document.getElementById('workoutUpload1').click()">Upload</button>
-            <select id="setSelect1" style="position: absolute; left: 40vw; width: 20vw; top: 45vh; color: black; background-color: yellow; font-family: 'Courier New', Courier, monospace; font-weight: bold;">
-            </select>
+        <div id="topClock" class="split-screen" style="background-color: yellow;color: black;">
+            <div class="left-side">
+                <div class="keep-track" id="countdownSingleSet">00:00</div>
+                <div class="keep-track" id="countSingleSet">00/00</div>
+                <div class="keep-track" id="countdownWholeset">00:00</div>
+                <div class="keep-track" id="countWholeSet">00/00</div>
+            </div>
+            <div class="right-side">
+                <div class="main-clock">00:00</div>
+                <div>
+                    <div class="left-side set-description">Warm Up : First Set</div>
+                    <button class="right-side upload-button">Upload file</button>
+                </div>
+            </div>
         </div>
-        <div id="bottomClock" style="position: absolute; user-select: none; -moz-user-select: none; width: 100vw; height: 50vh;background-color: yellow;color: black; top: 50vh">
-            <div id="clock2" style="position: absolute; top: 10vh; left: 25vw; width: 50vw; text-align: center; font-size: 25vh;" onclick="startOne()">00:00</div>
-            <div id="repLeft2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 69vw; top: 30vh;">00:00</div>
-            <div id="setLeft2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; left: 69vw;">00:00</div>
-            <div id="repDone2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center; top: 30vh;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-            <div id="setDone2" style="position: absolute; font-size: 15vh; width: 20vw; text-align: center;">&nbsp;&nbsp;/&nbsp;&nbsp;</div>
-            <input type="file" id="workoutUpload2" style="position: absolute; display: none;">
-            <button style="position: absolute; left: 50%; padding: 0 45px; color: black; background-color: yellow; border-radius: 20px; font-family: 'Courier New', Courier, monospace; font-weight: bold;" onclick="document.getElementById('workoutUpload1').click()">Upload</button>
-            <select id="setSelect2" style="position: absolute; left: 40vw; width: 20vw; top: 45vh; color: black; background-color: yellow; font-family: 'Courier New', Courier, monospace; font-weight: bold;">
-            </select>
+        <div id="bottomClock" class="split-screen" style="background-color: red;color: white; top: 50vh">
+            <div class="left-side">
+                <div class="keep-track" id="countdownSingleSet">00:00</div>
+                <div class="keep-track" id="countSingleSet">00/00</div>
+                <div class="keep-track" id="countdownWholeset">00:00</div>
+                <div class="keep-track" id="countWholeSet">00/00</div>
+            </div>
+            <div class="right-side">
+                <div class="main-clock">00:00</div>
+                <div>
+                    <div class="left-side set-description">Warm Up : First Set</div>
+                    <button class="right-side upload-button">Upload file</button>
+                </div>
+            </div>
         </div>
     </div>
     <script>
