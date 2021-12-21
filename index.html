@@ -379,17 +379,6 @@
           element.click();
 
           document.body.removeChild(element);
-
-          let element2 = document.createElement('a');
-          element2.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(globalInfo)));
-          element2.setAttribute('download', globalInfo.date + "_" + globalInfo.group + ".json");
-
-          element2.style.display = 'none';
-          document.body.appendChild(element2);
-
-          element2.click();
-
-          document.body.removeChild(element2);
       }
 
       let pdfButton = document.getElementById("clickbind");
