@@ -325,6 +325,20 @@
           wholeWorkout.activity = 46;
           wholeWorkout.intervals = [];
           globalInfo.sets.forEach(setItem => {
+              let restLine = {};
+              restLine.splitRest = 0;
+              restLine.ducked = false;
+              restLine.rest = false;
+              restLine.color = (globalColor % 9) + 1;
+              restLine.indefinite = false;
+              restLine.split = false;
+              restLine.vibration = false;
+              restLine.halfwayAlert = false;
+              restLine.duration = timeToInt(globalRestBetween);
+              restLine._type = "int";
+              restLine.name = "Rest, Setting up Next Set";
+
+              wholeWorkout.intervals.push(restLine);
               for (let i = 0; i < setItem.rounds; i++) {
                   setItem.lines.forEach(line => {
                       for (let j = 0; j < line.rep; j++) {
@@ -346,20 +360,6 @@
                       globalColor++;
                   });
               }
-              let restLine = {};
-              restLine.splitRest = 0;
-              restLine.ducked = false;
-              restLine.rest = false;
-              restLine.color = (globalColor % 9) + 1;
-              restLine.indefinite = false;
-              restLine.split = false;
-              restLine.vibration = false;
-              restLine.halfwayAlert = false;
-              restLine.duration = timeToInt(globalRestBetween);
-              restLine._type = "int";
-              restLine.name = "Rest, Setting up Next Set";
-
-              wholeWorkout.intervals.push(restLine);
               globalColor++;
           });
           folder.items.push(wholeWorkout);
