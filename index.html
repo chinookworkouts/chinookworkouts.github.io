@@ -116,7 +116,7 @@
           const globalRestBetween = document.getElementById("restInterval").value;
           info = {
               "date": document.getElementById('date').value.replace("/", "-"),
-              "group": document.getElementById('group').value.replace(" ", "-"),
+              "group": document.getElementById('group').value.replaceAll(" ", "-"),
               "title": document.getElementById('title').value,
               "yards": 0,
               "time": 0,
