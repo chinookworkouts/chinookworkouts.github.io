@@ -468,7 +468,7 @@
       }
 
       const makeDBCall = () => {
-	  alert("This still doesn't do anything, in development");
+	  fetch("https://catfact.ninja/fact").then(data=>{return data.json()}).then(res=>{console.log(res)})
       }
 
       let pdfButton = document.getElementById("clickbind");
