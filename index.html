@@ -74,9 +74,9 @@
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script>
       // RegExp's used throughout this website
-      const setLine = new RegExp('^(\\d+)\\s*x\\s*(\\d+)\\s*@\\s*(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d|\\d\\d|\\d)\\s+(.*)$');
+      const setLine = new RegExp('^(\\s|{)*(\\d+)\\s*(x|\u{00D7})\\s*(\\d+)\\s*@\\s*(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d|\\d\\d|\\d)\\s+(.*)$');
       const noRepLine = new RegExp('^(\\d+)\\s*@\\s*(\\d\\d:\\d\\d|\\d:\\d\\d|:\\d\\d|\\d\\d|\\d)\\s+(.*)$');
-      const roundLine = new RegExp('(\\d+)\\s*x\\s*{$');
+      const roundLine = new RegExp('(\\d+)\\s*(x|\u{00D7})\\s*{$');
       const setDes = new RegExp('//\\s*(.*)');
       const noteLine = new RegExp('--\\s*(.*)');
       const endRoundLine = new RegExp('^}$');
@@ -162,10 +162,10 @@
           data.forEach(line => {
               if (setLine.test(line)) {
                   let array = setLine.exec(line);
-                  let rep = parseInt(array[1], 10);
-                  let dis = parseInt(array[2], 10);
-                  let int = array[3];
-                  let des = array[4];
+                  let rep = parseInt(array[2], 10);
+                  let dis = parseInt(array[4], 10);
+                  let int = array[5];
+                  let des = array[6];
                   info.yards += currentRounds * rep * dis;
                   info.time += currentRounds * rep * timeToInt(int);
                   let currentLine = {
@@ -481,5 +481,4 @@
       submitButton.addEventListener("click", makeDBCall);
     </script>
   </body>
-
 </html>
