@@ -57,12 +57,17 @@
             </div>
             <div>
               <p>Total Time: <span id="totalTime"></span></p>
-              <p>Total Time with Rests: <span id="totalTimeWithRest"></span></p>
+              <p>With Rests: <span id="totalTimeWithRest"></span></p>
               <p>Total Yards: <span id="totalYards"></span></p>
             </div>
-            <button id="clickbind" type="button" class="btn btn-info">PDF</button>
-            <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
-            <button id="clickbind3" type="button" class="btn btn-info">Save</button>
+	    <div class="form-group">
+              <button id="clickbind" type="button" class="btn btn-info">PDF</button>
+              <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
+	    </div>
+	    <div class="form-group">
+              <button id="clickbind3" type="button" class="btn btn-info">Save</button>
+              <button id="clickbind4" type="button" class="btn btn-info">Load</button>
+	    </div>
           </div>
           <div class="col-9">
             <label for="workout">Workout:</label>
@@ -75,12 +80,14 @@
     <script src="make_pdf.js"></script>
     <script src="make_seconds.js"></script>
     <script src="make_set.js"></script>
+    <script src="make_db_call.js"></script>
     <script src="constants.js"></script>
     <script src="helpers.js"></script>
     <script>
       // global variable that holds the specific object
       let globalInfo;
       let globalColor = 0;
+
 
       // call this function to update our array every time a button is pressed in the textarea
       const process = (e) => {
@@ -92,6 +99,8 @@
           document.getElementById('totalTimeWithRest').innerHTML = timeToString(info.time + info.rest);
       }
 
+      process()
+
       const makeDBCall = () => {
 	  fetch("https://catfact.ninja/fact").then(data=>{return data.json()}).then(res=>{console.log(res)})
       }
@@ -102,8 +111,11 @@
       let secondsButton = document.getElementById("clickbind2");
       secondsButton.addEventListener("click", makeSeconds);
 
-      let submitButton = document.getElementById("clickbind3");
-      submitButton.addEventListener("click", makeDBCall);
+      let saveButton = document.getElementById("clickbind3");
+      saveButton.addEventListener("click", saveJson);
+
+      let loadButton = document.getElementById("clickbind4");
+      loadButton.addEventListener("click", loadJson);
     </script>
   </body>
 </html>
