@@ -1,7 +1,6 @@
 // save to db
 function saveJson() {
     fetch('https://lively-mud-8fe8731b4065481abf4cebb8e3fcc455.azurewebsites.net/workout', {
-    // fetch('http://127.0.0.1:5000/workout', {
 	method: 'PUT',
 	headers: {
 	    'Content-Type': 'application/json'
