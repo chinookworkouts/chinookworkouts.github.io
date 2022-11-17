@@ -83,7 +83,7 @@ const makeSeconds = () => {
                     secondsLine.halfwayAlert = false;
                     secondsLine.duration = timeToInt(line.int);
                     secondsLine._type = "int";
-                    secondsLine.name = (line.dis > 0 ? line.dis + " " : "") + line.des;
+                    secondsLine.name = (line.dis > 0 ? line.dis + " " : "") + line.des + " (" + (j + 1) + "/" + line.rep + ")" + " [" + (i + 1) + "/" + setItem.rounds + "]";
 
                     wholeWorkout.intervals.push(secondsLine);
                 }
