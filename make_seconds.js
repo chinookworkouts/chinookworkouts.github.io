@@ -83,7 +83,10 @@ const makeSeconds = () => {
                     secondsLine.halfwayAlert = false;
                     secondsLine.duration = timeToInt(line.int);
                     secondsLine._type = "int";
-                    secondsLine.name = (line.dis > 0 ? line.dis + " " : "") + line.des + " (" + (j + 1) + "/" + line.rep + ")" + " [" + (i + 1) + "/" + setItem.rounds + "]";
+                    name_distance = (line.dis > 0 ? line.dis + " " : "")
+                    name_set_num = (line.rep == 1 ? "" : " (" + (j + 1) + "/" + line.rep + ")")
+                    name_round_num = (setItem.rounds == 1 ? "" : " [" + (i + 1) + "/" + setItem.rounds + "]")
+                    secondsLine.name = name_distance + line.des + name_set_num + name_round_num;
 
                     wholeWorkout.intervals.push(secondsLine);
                 }
