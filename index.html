@@ -1,121 +1,119 @@
 <!doctype html>
 <html lang="en">
 
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Practice Writer</title>
-  </head>
+  <title>Practice Writer</title>
+</head>
 
-  <body style="font-family:'Courier New', Courier, monospace">
-    <div class="container">
-      <div id="Workout">
-        <h1>Workout Writer</h1>
-        <div class="row">
-          <div class="col-3">
-            <div class="form-group">
-              <label for="date">Date</label>
-              <input type="date" class="form-control" id="date" name="date" onchange="process(event, this)">
-            </div>
-            <div class="form-group">
-              <label for="group">Group</label><br />
-	      <input type="checkbox" id="sr_prep_plus" name="group_name" value="Senior Prep+" onchange="process(event, this)">
-	      <label for="sr_prep_plus">Senior Prep+</label><br>
-	      <input type="checkbox" id="sr_comp" name="group_name" value="Senior Competetive" onchange="process(event, this)">
-	      <label for="sr_comp">Senior Competetive</label><br>
-	      <input type="checkbox" id="sr_reach" name="group_name" value="Senior Reach" onchange="process(event, this)">
-	      <label for="sr_reach">Senior Reach</label><br>
-	      <input type="checkbox" id="sr_high_perf" name="group_name" value="Senior High Performance" onchange="process(event, this)">
-	      <label for="sr_high_perf">Senior High Performance</label>
-            </div>
-            <div class="form-group">
-              <label for="time_of_day">Time</label><br />
-	      <input type="radio" id="am" name="time_of_day" value="AM" onchange="process(event, this)">
-	      <label for="am">Morning</label><br />
-	      <input type="radio" id="pm" name="time_of_day" value="PM" onchange="process(event, this)">
-	      <label for="pm">Evening</label>
-            </div>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" name="title" maxlength="40" onchange="process(event, this)">
-            </div>
-            <div class="form-group">
-              <label for="rest">Rest in between</label>
-              <select class="form-control" id="restInterval" name="restInterval" onchange="process(event, this)">
-                <option value="1">1 min</option>
-                <option value="2">2 min</option>
-                <option value="3">3 min</option>
-                <option value="4">4 min</option>
-                <option value="5">5 min</option>
-                <option value="6">6 min</option>
-              </select>
-            </div>
-            <div>
-              <p>Total Time: <span id="totalTime"></span></p>
-              <p>With Rests: <span id="totalTimeWithRest"></span></p>
-              <p>Total Yards: <span id="totalYards"></span></p>
-            </div>
-	    <div class="form-group">
-              <button id="clickbind" type="button" class="btn btn-info">PDF</button>
-              <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
-	    </div>
-	    <div class="form-group">
-              <button id="clickbind3" type="button" class="btn btn-info">Save</button>
-              <button id="clickbind4" type="button" class="btn btn-info">Load</button>
-	    </div>
+<body style="font-family:'Courier New', Courier, monospace">
+  <div class="container">
+    <div id="Workout">
+      <h1>Workout Writer</h1>
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" onchange="process(event, this)">
           </div>
-          <div class="col-9">
-            <label for="workout">Workout:</label>
-            <textarea class="form-control" rows="24" id="workout" onkeyup="process(event, this)"></textarea>
+          <div class="form-group">
+            <label for="group">Group</label>
+            <input type="text" class="form-control" id="group" name="group_name" onchange="process(event, this)" onblur="validateGroupName()">
           </div>
+          <div class="form-group">
+            <label for="time_of_day">Time</label><br />
+            <input type="radio" id="am" name="time_of_day" value="AM" onchange="process(event, this)">
+            <label for="am">Morning</label><br />
+            <input type="radio" id="pm" name="time_of_day" value="PM" onchange="process(event, this)">
+            <label for="pm">Evening</label>
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" maxlength="40"
+              onchange="process(event, this)">
+          </div>
+          <div class="form-group">
+            <label for="rest">Rest in between</label>
+            <select class="form-control" id="restInterval" name="restInterval" onchange="process(event, this)">
+              <option value="1">1 min</option>
+              <option value="2">2 min</option>
+              <option value="3">3 min</option>
+              <option value="4">4 min</option>
+              <option value="5">5 min</option>
+              <option value="6">6 min</option>
+            </select>
+          </div>
+          <div>
+            <p>Total Time: <span id="totalTime"></span></p>
+            <p>With Rests: <span id="totalTimeWithRest"></span></p>
+            <p>Total Yards: <span id="totalYards"></span></p>
+          </div>
+          <div class="form-group">
+            <button id="clickbind" type="button" class="btn btn-info">PDF</button>
+            <button id="clickbind2" type="button" class="btn btn-info">Seconds</button>
+          </div>
+          <div class="form-group">
+            <button id="clickbind3" type="button" class="btn btn-info">Save</button>
+            <button id="clickbind4" type="button" class="btn btn-info">Load</button>
+          </div>
+        </div>
+        <div class="col-9">
+          <label for="workout">Workout:</label>
+          <textarea class="form-control" rows="24" id="workout" onkeyup="process(event, this)"></textarea>
         </div>
       </div>
     </div>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
-    <script src="make_pdf.js"></script>
-    <script src="make_seconds.js"></script>
-    <script src="make_set.js"></script>
-    <script src="make_db_call.js"></script>
-    <script src="constants.js"></script>
-    <script src="helpers.js"></script>
-    <script>
-      // global variable that holds the specific object
-      let globalInfo;
-      let globalColor = 0;
+  </div>
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+  <script src="images.js"></script>
+  <script src="make_pdf.js"></script>
+  <script src="make_seconds.js"></script>
+  <script src="make_set.js"></script>
+  <script src="validate_group.js"></script>
+  <script src="make_db_call.js"></script>
+  <script src="constants.js"></script>
+  <script src="helpers.js"></script>
+  <script>
+    // global variable that holds the specific object
+    let globalInfo;
+    let globalColor = 0;
 
 
-      // call this function to update our array every time a button is pressed in the textarea
-      const process = (e) => {
-          let textArea = document.getElementById('workout').value;
-          let array = textArea.split('\n');
-          let info = getInfo(array);
-          document.getElementById('totalYards').innerHTML = info.yards;
-          document.getElementById('totalTime').innerHTML = timeToString(info.time);
-          document.getElementById('totalTimeWithRest').innerHTML = timeToString(info.time + info.rest);
-      }
+    // call this function to update our array every time a button is pressed in the textarea
+    const process = (e) => {
+      let textArea = document.getElementById('workout').value;
+      let array = textArea.split('\n');
+      let info = getInfo(array);
+      document.getElementById('totalYards').innerHTML = info.yards;
+      document.getElementById('totalTime').innerHTML = timeToString(info.time);
+      document.getElementById('totalTimeWithRest').innerHTML = timeToString(info.time + info.rest);
+    }
 
-      process()
+    process()
 
-      const makeDBCall = () => {
-	  fetch("https://catfact.ninja/fact").then(data=>{return data.json()}).then(res=>{console.log(res)})
-      }
+    const makeDBCall = () => {
+      fetch("https://catfact.ninja/fact").then(data => { return data.json() }).then(res => { console.log(res) })
+    }
 
-      let pdfButton = document.getElementById("clickbind");
-      pdfButton.addEventListener("click", makePdf);
+    let pdfButton = document.getElementById("clickbind");
+    pdfButton.addEventListener("click", makePdf);
 
-      let secondsButton = document.getElementById("clickbind2");
-      secondsButton.addEventListener("click", makeSeconds);
+    let secondsButton = document.getElementById("clickbind2");
+    secondsButton.addEventListener("click", makeSeconds);
 
-      let saveButton = document.getElementById("clickbind3");
-      saveButton.addEventListener("click", saveJson);
+    let saveButton = document.getElementById("clickbind3");
+    saveButton.addEventListener("click", saveJson);
 
-      let loadButton = document.getElementById("clickbind4");
-      loadButton.addEventListener("click", loadJson);
-    </script>
-  </body>
+    let loadButton = document.getElementById("clickbind4");
+    loadButton.addEventListener("click", loadJson);
+  </script>
+</body>
+
 </html>

@@ -7,7 +7,8 @@ const makeSeconds = () => {
     seconds.items = [];
     let folder = {};
     folder._type = "pack";
-    folder.name = group_label() + " " + globalInfo.date;
+    group_info = groupCodeToGroupInfo(globalInfo.group)
+    folder.name = group_info.team_name + " " + group_info.pretty_name + " " + globalInfo.date;
     folder.color = 3;
     folder.items = [];
     globalInfo.sets.forEach(setItem => {
@@ -102,7 +103,7 @@ const makeSeconds = () => {
 
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(seconds)));
-    element.setAttribute('download', globalInfo.date + "_" + group_label() + ".seconds");
+    element.setAttribute('download', globalInfo.date + "_" + globalInfo.group + ".seconds");
 
     element.style.display = 'none';
     document.body.appendChild(element);

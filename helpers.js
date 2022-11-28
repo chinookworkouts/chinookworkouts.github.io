@@ -33,29 +33,3 @@ const timeToInt = (data) => {
     return 0;
 
 }
-
-const short_name = (group_name) => {
-    if(group_name == "Senior-High-Performance") {
-	return "Sr HP"
-    } else if(group_name == "Senior-Reach") {
-	return "Sr Reach"
-    } else if(group_name == "Senior-Prep+") {
-	return "Sr Prep+"
-    } else if(group_name == "Senior-Competetive") {
-	return "Sr Comp"
-    }
-    return ""
-}
-
-const group_label = () => {
-    grouplabel = ""
-    if(globalInfo.groups.length > 1) {
-	globalInfo.groups.forEach((group) => {
-	    grouplabel += (short_name(group) + ", ")
-	});
-	grouplabel = grouplabel.slice(0, -2);
-    } else if(globalInfo.groups.length == 1) {
-	grouplabel = globalInfo.groups[0].replaceAll("-", " ");
-    }
-    return grouplabel
-}

@@ -1,22 +1,17 @@
 // parse string into our custom object
 function getInfo(data) {
     const globalRestBetween = document.getElementById("restInterval").value;
-    groups = [];
-    document.getElementsByName('group_name').forEach((element) => {
-	if(element.checked) {
-	    groups.push(element.value.replaceAll(" ", "-"));
-	}
-    });
+    const group = groupStringToCode(document.getElementById('group').value);
     time_of_day = "";
     document.getElementsByName('time_of_day').forEach((element) => {
-	if(element.checked) {
-	    time_of_day = element.value;
-	}
+        if (element.checked) {
+            time_of_day = element.value;
+        }
     });
     info = {
         "date": document.getElementById('date').value.replace("/", "-"),
-	"time_of_day": time_of_day,
-        "groups": groups,
+        "time_of_day": time_of_day,
+        "group": group,
         "title": document.getElementById('title').value,
         "yards": 0,
         "time": 0,
@@ -44,7 +39,7 @@ function getInfo(data) {
                 "dis": dis,
                 "int": int,
                 "des": des,
-		"notes": []
+                "notes": []
             };
             currentSet.lines.push(currentLine);
         } else if (noRepLine.test(line)) {
@@ -60,7 +55,7 @@ function getInfo(data) {
                 "dis": dis,
                 "int": int,
                 "des": des,
-		"notes": []
+                "notes": []
             };
             currentSet.lines.push(currentLine);
         } else if (roundLine.test(line)) {
@@ -78,27 +73,27 @@ function getInfo(data) {
                 "dis": dis,
                 "int": int,
                 "des": des,
-		"notes": []
+                "notes": []
             };
             currentSet.lines.push(currentLine);
         } else if (setDes.test(line)) {
             let array = setDes.exec(line);
             info.rest += timeToInt(globalRestBetween);
             currentSet.des = array[1];
-	} else if (noteLine.test(line)) {
-	    let array = noteLine.exec(line);
-	    currentSet.lines.at(-1).notes.push(array[1]);
-	} else if (endRoundLine.test(line)) {
+        } else if (noteLine.test(line)) {
+            let array = noteLine.exec(line);
+            currentSet.lines.at(-1).notes.push(array[1]);
+        } else if (endRoundLine.test(line)) {
             if (currentSet.lines.length != 0) {
-		currentSet.rounds = currentRounds;
-		info.sets.push(currentSet);
-		currentRounds = 1;
-		currentSet = {
-		    des: "",
-		    lines: [],
-		    rounds: 1
-		};
-	    }
+                currentSet.rounds = currentRounds;
+                info.sets.push(currentSet);
+                currentRounds = 1;
+                currentSet = {
+                    des: "",
+                    lines: [],
+                    rounds: 1
+                };
+            }
         } else if (line === "") {
             if (currentSet.lines.length != 0) {
                 currentSet.rounds = currentRounds;
